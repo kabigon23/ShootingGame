@@ -6,9 +6,12 @@ public class Enemy : MonoBehaviour
 {
     public float speed = 5;
     Vector3 dir;
+    public GameObject explosionFactory;
 
     private void OnCollisionEnter(Collision other)
     {
+        GameObject explosion = Instantiate(explosionFactory);
+        explosion.transform.position = transform.position;
         Destroy(other.gameObject);
         Destroy(gameObject);
     }
