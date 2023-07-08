@@ -8,9 +8,13 @@ public class Enemy : MonoBehaviour
     Vector3 dir;
     public GameObject explosionFactory;
 
+
     private void OnCollisionEnter(Collision other)
     {
         GameObject explosion = Instantiate(explosionFactory);
+        GameObject smObject = GameObject.Find("ScoreManager");
+        ScoreManager sm = smObject.GetComponent<ScoreManager>();
+        sm.SetScore(sm.GetScore() + 1);
         explosion.transform.position = transform.position;
         Destroy(other.gameObject);
         Destroy(gameObject);
