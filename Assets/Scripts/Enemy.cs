@@ -14,10 +14,17 @@ public class Enemy : MonoBehaviour
         GameObject explosion = Instantiate(explosionFactory);
         ScoreManager.Instance.score++;
         explosion.transform.position = transform.position;
-        Destroy(other.gameObject);
-        Destroy(gameObject);
+        if (other.gameObject.name.Contains("Bullet"))
+        {
+            other.gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(other.gameObject);
+        }
+        gameObject.SetActive(false);
     }
-    void Start()
+    void OnEnable()
     {
         int randValue = Random.Range(1, 10);
         if (randValue < 3)
