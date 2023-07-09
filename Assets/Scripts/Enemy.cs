@@ -17,12 +17,17 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.name.Contains("Bullet"))
         {
             other.gameObject.SetActive(false);
+            PlayerFire player = GameObject.Find("Player").GetComponent<PlayerFire>();
+            player.bulletObjectPool.Add(other.gameObject);
         }
-        else
+        else if (other.gameObject.name.Contains("Enemy"))
         {
             Destroy(other.gameObject);
         }
         gameObject.SetActive(false);
+
+        EnemyManager manager = GameObject.Find("EnemayManager").GetComponent<EnemyManager>();
+        manager.enemyObjectPool.Add(gameObject);
     }
     void OnEnable()
     {
