@@ -31,15 +31,17 @@ public class EnemyManager : MonoBehaviour
         currentTime += Time.deltaTime;
         if (currentTime >= createTime)
         {
+            
             if (enemyObjectPool.Count > 0)
             {
                 GameObject enemy = enemyObjectPool[0];
+                enemy.SetActive(true);
                 enemyObjectPool.Remove(enemy);
                 
                 
                 int index = Random.Range(0, spawnPoints.Length);
                 enemy.transform.position = spawnPoints[index].position;
-                enemy.SetActive(true);
+                
                 
                 
             }

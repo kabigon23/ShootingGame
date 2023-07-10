@@ -20,14 +20,18 @@ public class Enemy : MonoBehaviour
             PlayerFire player = GameObject.Find("Player").GetComponent<PlayerFire>();
             player.bulletObjectPool.Add(other.gameObject);
         }
-        else if (other.gameObject.name.Contains("Enemy"))
+        else
         {
             Destroy(other.gameObject);
         }
+        
         gameObject.SetActive(false);
+        GameObject emObject = GameObject.Find("EnemyManager");
+        EnemyManager manager = emObject.GetComponent<EnemyManager>();
 
-        EnemyManager manager = GameObject.Find("EnemayManager").GetComponent<EnemyManager>();
         manager.enemyObjectPool.Add(gameObject);
+        
+
     }
     void OnEnable()
     {
