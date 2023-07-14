@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public float speed = 5;
     Vector3 dir;
     public GameObject explosionFactory;
-
+    GameObject playerObject;
 
     private void OnCollisionEnter(Collision other)
     {
@@ -17,8 +17,11 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.name.Contains("Bullet"))
         {
             other.gameObject.SetActive(false);
-            PlayerFire player = GameObject.Find("Player").GetComponent<PlayerFire>();
-            player.bulletObjectPool.Add(other.gameObject);
+            if (playerObject != null)
+            {
+                PlayerFire player = playerObject.GetComponent<PlayerFire>();
+                player.bulletObjectPool.Add(other.gameObject);
+            }
         }
         else
         {
@@ -33,19 +36,27 @@ public class Enemy : MonoBehaviour
         
 
     }
+    private void Awake()
+    {
+        playerObject = GameObject.Find("Player");
+        
+    }
     void OnEnable()
     {
-        int randValue = Random.Range(1, 10);
-        if (randValue < 3)
+        if (playerObject != null)
         {
-            GameObject target = GameObject.Find("Player");
-            dir = target.transform.position - transform.position;
-            dir.Normalize();
+            int randValue = Random.Range(1, 10);
+            if (randValue < 3)
+            {
+                dir = playerObject.transform.position - transform.position;
+                dir.Normalize();
+            }
+            else
+            {
+                dir = Vector3.down;
+            }
         }
-        else
-        {
-            dir = Vector3.down;
-        }
+
     }
 
     // Update is called once per frame
